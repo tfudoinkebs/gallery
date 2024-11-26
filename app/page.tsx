@@ -12,9 +12,7 @@ const supabase = createClient(
 export default async function Gallery() {
   try {
     // Trigger sync with Cloudinary
-    const apiUrl = process.env.NEXT_PUBLIC_BASE_URL
-      ? `${process.env.NEXT_PUBLIC_BASE_URL}/api/sync-cloudinary`
-      : "http://localhost:3000/api/sync-cloudinary"; // fallback for local development
+    const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/sync-cloudinary`;
 
     const syncResponse = await fetch(apiUrl);
 
