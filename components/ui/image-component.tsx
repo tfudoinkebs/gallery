@@ -22,7 +22,7 @@ export default function BlurImage({ image }: { image: Image }) {
     <PhotoProvider>
       <div className="group">
         <PhotoView src={image.image_src ?? ""}>
-          <div className="aspect-w-1 aspect-h-[1.5] w-full overflow-hidden bg-gray-200 cursor-pointer shadow-xl">
+          <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden bg-gray-200 cursor-pointer shadow-xl">
             <Image
               alt={image.title ?? ""}
               src={image.image_src ?? ""}
