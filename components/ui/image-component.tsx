@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import Link from "next/link"; // Add this import
+import { PhotoProvider, PhotoView } from "react-photo-view";
+import "react-photo-view/dist/react-photo-view.css";
 import { cn } from "@/lib/utils";
 
 type Image = {
@@ -18,26 +19,30 @@ export default function BlurImage({ image }: { image: Image }) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <Link href={image.href ?? "#"} className="group">
-      <div className="aspect-w-1 aspect-h-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-w-7 xl:aspect-h-8">
-        <Image
-          alt={image.title ?? ""}
-          src={image.image_src ?? ""}
-          layout="fill"
-          objectFit="cover"
-          className={cn(
-            "duration-700 ease-in-out group-hover:opacity-75",
-            isLoading
-              ? "scale-110 blur-2xl grayscale"
-              : "scale-100 blur-0 grayscale-0"
-          )}
-          onLoadingComplete={() => setLoading(false)}
-        />
+    <PhotoProvider>
+      <div className="group">
+        <PhotoView src={image.image_src ?? ""}>
+          <div className="aspect-w-1 aspect-h-[1.5] w-full overflow-hidden bg-gray-200 cursor-pointer shadow-xl">
+            <Image
+              alt={image.title ?? ""}
+              src={image.image_src ?? ""}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              className={cn(
+                "object-cover duration-700 ease-in-out group-hover:opacity-75",
+                isLoading
+                  ? "scale-110 blur-2xl grayscale"
+                  : "scale-100 blur-0 grayscale-0"
+              )}
+              onLoad={() => setLoading(false)}
+            />
+          </div>
+        </PhotoView>
+        <h3 className="text-sm md:text-xs font-medium">{image.title}</h3>
+        {/* <p className="mt-1 text-lg font-medium text-gray-900">
+          {image.description}
+        </p> */}
       </div>
-      <h3 className="mt-4 text-sm text-gray-700">{image.title}</h3>
-      <p className="mt-1 text-lg font-medium text-gray-900">
-        {image.description}
-      </p>
-    </Link>
+    </PhotoProvider>
   );
 }
