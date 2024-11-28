@@ -28,8 +28,8 @@ export default async function Gallery() {
       .select("*")
       .order("id");
 
-    console.log("Fetched data:", images);
-    console.log("Error if any:", error);
+    // console.log("Fetched data:", images);
+    // console.log("Error if any:", error);
 
     if (error) {
       console.error("Error fetching images:", error);
@@ -37,7 +37,11 @@ export default async function Gallery() {
     }
 
     if (!images || images.length === 0) {
-      return <div>No images found</div>;
+      return (
+        <div className="w-full h-screen text-center items-center justify-center">
+          No images found
+        </div>
+      );
     }
 
     return (
@@ -56,8 +60,8 @@ export default async function Gallery() {
         {/* Scrollable Content */}
         <main className="relative">
           <Header />
-          <div className="mx-auto max-w-2xl py-4 px-4 sm:py-8 sm:px-6 lg:max-w-7xl lg:px-8">
-            <div className="grid grid-cols-1 gap-y-10 gap-x-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
+          <div className="mx-auto max-w-2xl p-4 md:max-w-7xl">
+            <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-6">
               {images?.map((image) => (
                 <BlurImage key={image.id} image={image} />
               ))}
@@ -69,6 +73,10 @@ export default async function Gallery() {
     );
   } catch (error) {
     console.error("Page error:", error);
-    return <div>Something went wrong</div>;
+    return (
+      <div className="w-full h-screen text-center items-center justify-center">
+        Something went wrong
+      </div>
+    );
   }
 }

@@ -38,7 +38,7 @@ export default function BlurImage({ image }: { image: Image }) {
             />
           </div>
         </PhotoView>
-        <h3 className="text-sm md:text-xs font-medium">{image.title}</h3>
+        <h3 className="text-xs md:text-sm font-medium">{image.title}</h3>
         {/* <p className="mt-1 text-lg font-medium text-gray-900">
           {image.description}
         </p> */}
