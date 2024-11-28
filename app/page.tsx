@@ -13,9 +13,7 @@ export default async function Gallery() {
   try {
     // Trigger sync with Cloudinary
     const apiUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/api/sync-cloudinary`;
-
     const syncResponse = await fetch(apiUrl);
-
     const syncData = await syncResponse.json();
 
     if (!syncResponse.ok) {
@@ -27,9 +25,6 @@ export default async function Gallery() {
       .from("images")
       .select("*")
       .order("id");
-
-    // console.log("Fetched data:", images);
-    // console.log("Error if any:", error);
 
     if (error) {
       console.error("Error fetching images:", error);
@@ -43,6 +38,13 @@ export default async function Gallery() {
         </div>
       );
     }
+
+    // Sort images chronologically based on the title (mm/dd/yyyy)
+    const sortedImages = images.sort((a, b) => {
+      const dateA = new Date(a.title!); // Convert title to Date
+      const dateB = new Date(b.title!); // Convert title to Date
+      return dateA.getTime() - dateB.getTime(); // Compare timestamps
+    });
 
     return (
       <>
@@ -62,7 +64,7 @@ export default async function Gallery() {
           <Header />
           <div className="mx-auto max-w-2xl p-4 md:max-w-7xl">
             <div className="grid grid-cols-3 md:grid-cols-4 gap-2 md:gap-6">
-              {images?.map((image) => (
+              {sortedImages.map((image) => (
                 <BlurImage key={image.id} image={image} />
               ))}
             </div>
